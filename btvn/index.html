@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đếm ký tự</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h2><label for="onhap">Đếm ký tự</label></h2>
+    <input type="text" id="onhap" />
+    <p id="dem">Max 0/20</p>
+
+    <script>
+      const onhap = document.getElementById("onhap");
+      const dem = document.getElementById("dem");
+
+      onhap.addEventListener("input", () => {
+        const soKyTu = onhap.value.length;
+
+        dem.textContent = `Max ${soKyTu}/20`;
+        dem.classList.toggle("do", soKyTu > 20);
+      });
+    </script>
+  </body>
+</html>
