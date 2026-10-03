@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Danh sách đi chợ</title>
+
+    <style>
+      body {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 16px;
+        line-height: 1.6;
+      }
+      .demo-box {
+        border: 1px solid #ddd;
+        padding: 12px;
+      }
+
+      input {
+        padding: 8px;
+      }
+
+      #ds {
+        list-style: none;
+        padding: 0;
+      }
+
+      #ds li {
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .da-mua {
+        text-decoration: line-through;
+        color: gray;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="demo-box">
+      <form id="form">
+        <label for="o-ten">Tên món:</label>
+        <input type="text" name="" id="o-ten" placeholder="VD: pizza" />
+        <button type="submit">Thêm món</button>
+      </form>
+
+      <ul id="ds"></ul>
+
+      <p id="dem">Còn 0/0 món chưa mua</p>
+    </div>
+    <script>
+      // Tìm các phần tử bên trên
+      const form = document.querySelector("#form");
+      const oTen = document.querySelector("#o-ten");
+      const ds = document.querySelector("#ds");
+      const dem = document.querySelector("#dem");
+
+      // Hàm cập nhật số món chưa mua
+      function capNhat() {
+        const tong = ds.querySelectorAll("li").length;
+        const daMua = ds.querySelectorAll(".da-mua").length;
+
+        dem.textContent = `Còn ${tong - daMua}/${tong} món chưa mua`;
+      }
+
+      // bấm thêm món
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        // Lấy tên móm, trim() bỏ khoảng trắng hai đầu
+        const ten = oTen.value.trim();
+
+        // Nếu tên trống thì k nhập được
+        if (ten === "") return;
+
+        // Tạo dòng chứa tên món
+        const li = document.createElement("li");
+        li.textContent = ten;
+
+        // Bấm một lần để đánh đấu đã mua hoặc chưa
+        li.addEventListener("click", () => {
+          li.classList.toggle("da-mua");
+          capNhat();
+        });
+
+        // Nháy đúp để xóa món
+        li.addEventListener("dblclick", () => {
+          li.remove();
+          capNhat();
+        });
+
+        ds.append(li);
+
+        capNhat();
+
+        oTen.value = "";
+        oTen.focus();
+      });
+    </script>
+  </body>
+</html>

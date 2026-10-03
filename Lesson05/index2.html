@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo thực hành</title>
+
+    <style>
+      body {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 16px;
+        line-height: 1.6;
+      }
+
+      .demo-box {
+        border: 1px solid #ddd;
+        padding: 12px;
+      }
+
+      .demo-box input {
+        padding: 6px 8px;
+        width: 200px;
+        max-width: 100%;
+      }
+
+      #ds {
+        list-style: none;
+        padding: 0;
+        margin: 10px 0 0;
+      }
+
+      #ds li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #eee;
+        padding: 8px 0;
+      }
+
+      #ds button {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="demo-box">
+      <form id="form">
+        <label for="o-ten">Tên món:</label>
+        <input type="text" name="" id="o-ten" placeholder="VD: pizza" />
+        <button type="submit">Thêm món</button>
+      </form>
+
+      <ul id="ds"></ul>
+    </div>
+
+    <script>
+      // Tìm biểu mẫu, ô nhập và danh sách
+      const form = document.querySelector("#form");
+      const oTen = document.querySelector("#o-ten");
+      const ds = document.querySelector("#ds");
+
+      // Khi người dùng gửi biểu mẫu
+      form.addEventListener("submit", (e) => {
+        // Ngăn thao tác gửi mặc định làm tải lại trang
+        e.preventDefault();
+
+        // Lấy tên món và bỏ khoảng trắng ở hai đầu
+        const ten = oTen.value.trim();
+
+        // Nếu chưa nhập tên thì dừng
+        if (ten === "") return;
+
+        // Tạo một dòng mới cho danh sách
+        const li = document.createElement("li");
+
+        // Tạo phần chứa tên món
+        const span = document.createElement("span");
+        span.textContent = ten;
+
+        // Tạo nút xóa
+        const nutXoa = document.createElement("button");
+        nutXoa.type = "button";
+        nutXoa.textContent = "X";
+
+        // Bấm X thì xóa dòng chứa nút đó
+        nutXoa.addEventListener("click", () => {
+          li.remove();
+        });
+
+        // Cho tên món và nút X vào dòng
+        li.append(span, nutXoa);
+
+        // Đưa dòng đó vào danh sách trên trang
+        ds.append(li);
+
+        // Xóa chữ trong ô nhập
+        oTen.value = "";
+
+        // Đưa con trỏ về ô để nhập món tiếp theo
+        oTen.focus();
+      });
+    </script>
+  </body>
+</html>
