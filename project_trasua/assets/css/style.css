@@ -1,0 +1,334 @@
+/* Cai dat chung */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #44352f;
+  background: #fffaf4;
+}
+
+a {
+  color: #795548;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #a66b42;
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 22px;
+  color: #603f32;
+}
+
+h3 {
+  color: #795548;
+}
+
+/* Phan dau trang */
+header {
+  padding: 32px 15px;
+  text-align: center;
+  color: white;
+  background: linear-gradient(135deg, #795548, #a87957);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 32px;
+  letter-spacing: 2px;
+}
+
+header p {
+  margin: 5px 0 0;
+  color: #fff0df;
+}
+
+/* Thanh dieu huong */
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(70, 45, 30, 0.08);
+}
+
+nav a {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+nav a:hover {
+  color: white;
+  background: #795548;
+}
+
+/* Noi dung chinh */
+main {
+  width: 92%;
+  max-width: 1200px;
+  min-height: 350px;
+  margin: 30px auto;
+  padding: 28px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(70, 45, 30, 0.06);
+}
+
+/* Form tim kiem */
+form {
+  margin-bottom: 20px;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  max-width: 500px;
+  padding: 11px 12px;
+  margin-top: 6px;
+  border: 1px solid #dfd1c5;
+  border-radius: 8px;
+  background: #fffdfb;
+  color: #44352f;
+  font-family: inherit;
+  font-size: 15px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #a87957;
+  box-shadow: 0 0 0 3px rgba(168, 121, 87, 0.12);
+}
+
+input[type="number"] {
+  max-width: 130px;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+input[type="number"][name^="so_luong"] {
+  max-width: 85px;
+}
+
+button {
+  display: inline-block;
+  padding: 11px 20px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  background: #795548;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #5d4037;
+  transform: translateY(-1px);
+}
+
+/* Nut va lien ket thao tac */
+main a:not(nav a) {
+  font-weight: 500;
+}
+
+main a:not(nav a):hover {
+  text-decoration: underline;
+}
+
+main button + a {
+  margin-left: 10px;
+}
+
+/* Danh sach mon uong */
+.menu,
+.danh-sach-mon {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 25px;
+}
+
+.mon-uong,
+.mon {
+  overflow: hidden;
+  padding: 15px;
+  border: 1px solid #eee3d9;
+  border-radius: 14px;
+  background: white;
+  box-shadow: 0 3px 12px rgba(70, 45, 30, 0.05);
+  transition: 0.2s;
+}
+
+.mon-uong:hover,
+.mon:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(70, 45, 30, 0.12);
+}
+
+.mon-uong img,
+.mon img {
+  display: block;
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.gia {
+  color: #b45e32;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.mon-uong h3,
+.mon h3 {
+  margin-bottom: 8px;
+}
+
+.mon-uong p,
+.mon p {
+  margin: 8px 0;
+}
+
+/* Bang du lieu */
+table {
+  width: 100%;
+  margin: 18px 0;
+  border-collapse: collapse;
+  background: white;
+}
+
+th,
+td {
+  padding: 12px;
+  border: 1px solid #eadfd5;
+  text-align: left;
+  vertical-align: middle;
+}
+
+th {
+  color: #603f32;
+  background: #f5e9dc;
+}
+
+tr:nth-child(even) {
+  background: #fffaf5;
+}
+
+td form {
+  margin: 0;
+}
+
+td input,
+td select {
+  margin: 0 0 6px;
+}
+
+/* Duong ke va thong bao */
+hr {
+  margin: 25px 0;
+  border: none;
+  border-top: 1px solid #eadfd5;
+}
+
+main > p {
+  overflow-wrap: anywhere;
+}
+
+/* Chan trang */
+footer {
+  margin-top: 40px;
+  padding: 22px 15px;
+  text-align: center;
+  color: #fff0df;
+  background: #603f32;
+}
+
+/* Man hinh may tinh bang */
+@media (max-width: 900px) {
+  .menu,
+  .danh-sach-mon {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  main {
+    padding: 22px;
+  }
+}
+
+/* Man hinh dien thoai */
+@media (max-width: 600px) {
+  header {
+    padding: 24px 12px;
+  }
+
+  header h1 {
+    font-size: 25px;
+  }
+
+  nav {
+    gap: 4px;
+  }
+
+  nav a {
+    padding: 7px 10px;
+    font-size: 13px;
+  }
+
+  main {
+    width: 94%;
+    margin: 18px auto;
+    padding: 16px;
+  }
+
+  .menu,
+  .danh-sach-mon {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .mon-uong img,
+  .mon img {
+    height: 230px;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  th,
+  td {
+    padding: 9px;
+  }
+
+  input,
+  textarea,
+  select {
+    max-width: 100%;
+  }
+
+  button {
+    margin-bottom: 5px;
+  }
+}
