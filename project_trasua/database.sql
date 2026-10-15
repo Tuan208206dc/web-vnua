@@ -31,7 +31,7 @@ CREATE TABLE `chi_tiet_don_hang` (
   KEY `mon_uong_id` (`mon_uong_id`),
   CONSTRAINT `chi_tiet_don_hang_ibfk_1` FOREIGN KEY (`don_hang_id`) REFERENCES `don_hang` (`id`),
   CONSTRAINT `chi_tiet_don_hang_ibfk_2` FOREIGN KEY (`mon_uong_id`) REFERENCES `mon_uong` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `chi_tiet_don_hang` */
 
@@ -40,7 +40,9 @@ insert  into `chi_tiet_don_hang`(`id`,`don_hang_id`,`mon_uong_id`,`so_luong`,`do
 (2,2,1,1,30000.00),
 (3,2,2,1,35000.00),
 (4,3,5,1,35000.00),
-(5,3,2,1,35000.00);
+(5,3,2,1,35000.00),
+(6,4,6,1,35001.00),
+(7,4,4,1,30000.00);
 
 /*Table structure for table `don_hang` */
 
@@ -55,14 +57,15 @@ CREATE TABLE `don_hang` (
   `trang_thai` varchar(30) DEFAULT 'Chờ xác nhận',
   `ngay_dat` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `don_hang` */
 
 insert  into `don_hang`(`id`,`ten_khach`,`so_dien_thoai`,`dia_chi`,`tong_tien`,`trang_thai`,`ngay_dat`) values 
 (1,'du','0342365304','d',35000.00,'Chờ xác nhận','2026-10-14 21:26:34'),
 (2,'linh','0384903253','l',65000.00,'Chờ xác nhận','2026-10-14 21:54:16'),
-(3,'Nguyễn Diêu Linh','0384903253','32 đào nguyên a',70000.00,'Chờ xác nhận','2026-10-14 22:02:42');
+(3,'Nguyễn Diêu Linh','0384903253','32 đào nguyên a',70000.00,'Chờ xác nhận','2026-10-14 22:02:42'),
+(4,'Nguyễn Diêu Linh','0384903253','23',65001.00,'Chờ xác nhận','2026-10-15 10:26:01');
 
 /*Table structure for table `mon_uong` */
 
@@ -103,7 +106,7 @@ CREATE TABLE `tai_khoan_admin` (
 /*Data for the table `tai_khoan_admin` */
 
 insert  into `tai_khoan_admin`(`id`,`ten_dang_nhap`,`mat_khau`) values 
-(1,'admin','admin123');
+(1,'admin','$2y$12$g6JNGvQkx3aRdc7r75iwoe2QEGhn661sqa/xdfPTdbpxdHkIvzv8q');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

@@ -1,33 +1,34 @@
-```php
 <?php
 session_start();
 include "kn.php";
 
-// Khoi tao gio hang neu chua co
 if (!isset($_SESSION['gio_hang'])) {
     $_SESSION['gio_hang'] = array();
 }
 
-// Them mon vao gio hang
 if (isset($_GET['id'])) {
     $id = (int) $_GET['id'];
 
-    $sql = "SELECT * FROM mon_uong
-            WHERE id = $id AND trang_thai = 1";
-    $result = mysqli_query($conn, $sql);
+    if ($id > 0) {
+        $sql = "SELECT * FROM mon_uong WHERE id = ? AND trang_thai = 1";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "i", $id);
+        mysqli_stmt_execute($stmt);
+        $result_mon = mysqli_stmt_get_result($stmt);
+        $mon = mysqli_fetch_assoc($result_mon);
+        mysqli_stmt_close($stmt);
 
-    if ($result && mysqli_num_rows($result) > 0) {
-        $mon = mysqli_fetch_assoc($result);
-
-        if (isset($_SESSION['gio_hang'][$id])) {
-            $_SESSION['gio_hang'][$id]['so_luong']++;
-        } else {
-            $_SESSION['gio_hang'][$id] = array(
-                'id' => $mon['id'],
-                'ten_mon' => $mon['ten_mon'],
-                'gia' => $mon['gia'],
-                'so_luong' => 1
-            );
+        if ($mon) {
+            if (isset($_SESSION['gio_hang'][$id])) {
+                $_SESSION['gio_hang'][$id]['so_luong']++;
+            } else {
+                $_SESSION['gio_hang'][$id] = array(
+                    "id" => (int) $mon['id'],
+                    "ten_mon" => $mon['ten_mon'],
+                    "gia" => (float) $mon['gia'],
+                    "so_luong" => 1
+                );
+            }
         }
     }
 
@@ -35,9 +36,8 @@ if (isset($_GET['id'])) {
     exit();
 }
 
-// Cap nhat so luong
 if (isset($_POST['cap_nhat'])) {
-    if (isset($_POST['so_luong'])) {
+    if (isset($_POST['so_luong']) && is_array($_POST['so_luong'])) {
         foreach ($_POST['so_luong'] as $id => $so_luong) {
             $id = (int) $id;
             $so_luong = (int) $so_luong;
@@ -45,13 +45,15 @@ if (isset($_POST['cap_nhat'])) {
             if ($so_luong <= 0) {
                 unset($_SESSION['gio_hang'][$id]);
             } elseif (isset($_SESSION['gio_hang'][$id])) {
-                $_SESSION['gio_hang'][$id]['so_luong'] = min($so_luong, 99);
+                $_SESSION['gio_hang'][$id]['so_luong'] = $so_luong;
             }
         }
     }
+
+    header("Location: gio_hang.php");
+    exit();
 }
 
-// Xoa mot mon khoi gio hang
 if (isset($_GET['xoa'])) {
     $id = (int) $_GET['xoa'];
     unset($_SESSION['gio_hang'][$id]);
@@ -60,14 +62,12 @@ if (isset($_GET['xoa'])) {
     exit();
 }
 
-// Tinh tong tien
 $tong_tien = 0;
 
 foreach ($_SESSION['gio_hang'] as $mon) {
     $tong_tien += $mon['gia'] * $mon['so_luong'];
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -77,7 +77,6 @@ foreach ($_SESSION['gio_hang'] as $mon) {
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-
 <header>
     <h1>TIỆM TRÀ SỮA</h1>
     <p>Giỏ hàng của bạn</p>
@@ -86,18 +85,16 @@ foreach ($_SESSION['gio_hang'] as $mon) {
 <nav>
     <a href="index.php">Trang chủ</a>
     <a href="gio_hang.php">Giỏ hàng</a>
+    <a href="tra_cuu_don.php">Tra cứu đơn hàng</a>
 </nav>
 
 <main>
     <h2>GIỎ HÀNG</h2>
 
     <?php if (empty($_SESSION['gio_hang'])) { ?>
-
         <p>Giỏ hàng đang trống.</p>
-        <a href="index.php">Quay lại chọn món</a>
-
+        <a href="index.php">Quay lại menu</a>
     <?php } else { ?>
-
         <form action="gio_hang.php" method="POST">
             <table>
                 <tr>
@@ -107,40 +104,23 @@ foreach ($_SESSION['gio_hang'] as $mon) {
                     <th>Thành tiền</th>
                     <th>Thao tác</th>
                 </tr>
-
-                <?php foreach ($_SESSION['gio_hang'] as $id => $mon) { ?>
+                <?php foreach ($_SESSION['gio_hang'] as $mon) { ?>
                     <tr>
-                        <td>
-                            <?php echo htmlspecialchars($mon['ten_mon']); ?>
-                        </td>
-
-                        <td>
-                            <?php echo number_format($mon['gia'], 0, ',', '.'); ?> đ
-                        </td>
-
+                        <td><?php echo htmlspecialchars($mon['ten_mon']); ?></td>
+                        <td><?php echo number_format($mon['gia'], 0, ',', '.'); ?> đ</td>
                         <td>
                             <input
                                 type="number"
-                                name="so_luong[<?php echo $id; ?>]"
-                                value="<?php echo $mon['so_luong']; ?>"
+                                name="so_luong[<?php echo (int)$mon['id']; ?>]"
                                 min="0"
-                                max="99"
+                                value="<?php echo (int)$mon['so_luong']; ?>"
                             >
                         </td>
-
                         <td>
-                            <?php
-                            echo number_format(
-                                $mon['gia'] * $mon['so_luong'],
-                                0,
-                                ',',
-                                '.'
-                            );
-                            ?> đ
+                            <?php echo number_format($mon['gia'] * $mon['so_luong'], 0, ',', '.'); ?> đ
                         </td>
-
                         <td>
-                            <a href="gio_hang.php?xoa=<?php echo $id; ?>">
+                            <a href="gio_hang.php?xoa=<?php echo (int)$mon['id']; ?>">
                                 Xóa
                             </a>
                         </td>
@@ -148,21 +128,13 @@ foreach ($_SESSION['gio_hang'] as $mon) {
                 <?php } ?>
             </table>
 
-            <p class="gia">
-                Tổng tiền:
-                <?php echo number_format($tong_tien, 0, ',', '.'); ?> đ
-            </p>
-
-            <button type="submit" name="cap_nhat">
-                Cập nhật giỏ hàng
-            </button>
-
-            <a href="dat_hang.php">Tiến hành đặt hàng</a>
+            <button type="submit" name="cap_nhat">Cập nhật giỏ hàng</button>
         </form>
 
+        <h3>Tổng tiền: <?php echo number_format($tong_tien, 0, ',', '.'); ?> đ</h3>
+        <a href="dat_hang.php">Tiến hành đặt hàng</a>
+        <p><a href="index.php">Tiếp tục chọn món</a></p>
     <?php } ?>
 </main>
-
 </body>
 </html>
-```

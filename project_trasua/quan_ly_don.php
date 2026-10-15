@@ -1,15 +1,12 @@
-
 <?php
 session_start();
 include "kn.php";
 
-// Kiem tra dang nhap
 if (!isset($_SESSION['admin_id'])) {
     header("Location: dang_nhap.php");
     exit();
 }
 
-// Cap nhat trang thai don hang
 if (isset($_POST['cap_nhat'])) {
     $id = (int) $_POST['id'];
     $trang_thai = $_POST['trang_thai'];
@@ -24,7 +21,6 @@ if (isset($_POST['cap_nhat'])) {
     if (in_array($trang_thai, $trang_thai_hop_le, true)) {
         $sql = "UPDATE don_hang SET trang_thai = ? WHERE id = ?";
         $stmt = mysqli_prepare($conn, $sql);
-
         mysqli_stmt_bind_param($stmt, "si", $trang_thai, $id);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
@@ -34,11 +30,9 @@ if (isset($_POST['cap_nhat'])) {
     exit();
 }
 
-// Lay danh sach don hang
 $sql = "SELECT * FROM don_hang ORDER BY ngay_dat DESC";
 $result = mysqli_query($conn, $sql);
 ?>
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -48,7 +42,6 @@ $result = mysqli_query($conn, $sql);
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-
 <header>
     <h1>TIỆM TRÀ SỮA</h1>
     <p>Quản lý đơn hàng</p>
@@ -65,10 +58,9 @@ $result = mysqli_query($conn, $sql);
 <main>
     <h2>DANH SÁCH ĐƠN HÀNG</h2>
 
-    <?php if (mysqli_num_rows($result) == 0) { ?>
+    <?php if (!$result || mysqli_num_rows($result) == 0) { ?>
         <p>Chưa có đơn hàng nào.</p>
     <?php } else { ?>
-
         <table>
             <tr>
                 <th>Mã đơn</th>
@@ -80,50 +72,18 @@ $result = mysqli_query($conn, $sql);
                 <th>Trạng thái</th>
                 <th>Cập nhật</th>
             </tr>
-
             <?php while ($don = mysqli_fetch_assoc($result)) { ?>
                 <tr>
-                    <td><?php echo $don['id']; ?></td>
-
-                    <td>
-                        <?php echo htmlspecialchars($don['ten_khach']); ?>
-                    </td>
-
-                    <td>
-                        <?php echo htmlspecialchars($don['so_dien_thoai']); ?>
-                    </td>
-
-                    <td>
-                        <?php echo htmlspecialchars($don['dia_chi']); ?>
-                    </td>
-
-                    <td>
-                        <?php
-                        echo number_format(
-                            $don['tong_tien'],
-                            0,
-                            ',',
-                            '.'
-                        );
-                        ?> đ
-                    </td>
-
-                    <td>
-                        <?php echo htmlspecialchars($don['ngay_dat']); ?>
-                    </td>
-
-                    <td>
-                        <?php echo htmlspecialchars($don['trang_thai']); ?>
-                    </td>
-
+                    <td><?php echo (int)$don['id']; ?></td>
+                    <td><?php echo htmlspecialchars($don['ten_khach']); ?></td>
+                    <td><?php echo htmlspecialchars($don['so_dien_thoai']); ?></td>
+                    <td><?php echo htmlspecialchars($don['dia_chi']); ?></td>
+                    <td><?php echo number_format($don['tong_tien'], 0, ',', '.'); ?> đ</td>
+                    <td><?php echo htmlspecialchars($don['ngay_dat']); ?></td>
+                    <td><?php echo htmlspecialchars($don['trang_thai']); ?></td>
                     <td>
                         <form action="quan_ly_don.php" method="POST">
-                            <input
-                                type="hidden"
-                                name="id"
-                                value="<?php echo $don['id']; ?>"
-                            >
-
+                            <input type="hidden" name="id" value="<?php echo (int)$don['id']; ?>">
                             <select name="trang_thai">
                                 <?php
                                 $cac_trang_thai = array(
@@ -132,33 +92,23 @@ $result = mysqli_query($conn, $sql);
                                     "Hoàn thành",
                                     "Đã hủy"
                                 );
-
                                 foreach ($cac_trang_thai as $tt) {
                                 ?>
                                     <option
-                                        value="<?php echo $tt; ?>"
-                                        <?php
-                                        echo $don['trang_thai'] == $tt
-                                            ? "selected"
-                                            : "";
-                                        ?>
+                                        value="<?php echo htmlspecialchars($tt); ?>"
+                                        <?php echo $don['trang_thai'] == $tt ? "selected" : ""; ?>
                                     >
-                                        <?php echo $tt; ?>
+                                        <?php echo htmlspecialchars($tt); ?>
                                     </option>
                                 <?php } ?>
                             </select>
-
-                            <button type="submit" name="cap_nhat">
-                                Lưu
-                            </button>
+                            <button type="submit" name="cap_nhat">Lưu</button>
                         </form>
                     </td>
                 </tr>
             <?php } ?>
         </table>
-
     <?php } ?>
 </main>
-
 </body>
 </html>
