@@ -1,31 +1,13 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-
-        <a class="navbar-brand" href="{{ url('/') }}">
+<header class="navbar">
+    <div class="container nav-content">
+        <a href="{{ route('home') }}" class="logo">
             Góc Công Nghệ
         </a>
 
-        <button class="navbar-toggler" type="button"
-                data-toggle="collapse" data-target="#menu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="menu">
-            <ul class="navbar-nav ml-auto">
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/') }}">
-                        Trang chủ
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/posts') }}">
-                        Bài viết
-                    </a>
-                </li>
-
-            </ul>
-        </div>
+        <nav class="menu">
+            <a href="{{ route('home') }}">Trang chủ</a>
+            <a href="{{ route('post.index') }}">Bài viết</a>
+            <a href="{{ route('post.create') }}">Thêm bài viết</a>
+        </nav>
     </div>
-</nav>
+</header>

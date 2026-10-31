@@ -4,30 +4,66 @@
 
 @section('content')
 
-    @if($post)
-        <div class="card">
-            <div class="card-body">
+<main class="container page-content">
 
-                <h1>{{ $post->title }}</h1>
+    <section class="post-detail">
+        <h2 class="section-title">Chi tiết bài viết</h2>
 
-                <hr>
+        <article class="post-card">
 
-                <p>{{ $post->content }}</p>
+            @if ($post->image)
+                <img src="{{ asset('storage/' . $post->image) }}"
+                     alt="{{ $post->title }}"
+                     class="post-image">
+            @endif
 
-                <a href="{{ url('/') }}" class="btn btn-primary">
-                    Quay lại trang chủ
+            <div class="post-meta">
+                Bài viết #{{ $post->id }}
+                | Tác giả: {{ $post->user->name ?? 'Chưa xác định' }}
+
+                @if ($post->created_at)
+                    | Ngày đăng: {{ $post->created_at->format('d/m/Y') }}
+                @endif
+            </div>
+
+            <h1>{{ $post->title }}</h1>
+
+            <div class="post-excerpt post-content">
+                {{ $post->content }}
+            </div>
+
+            <div class="post-actions">
+
+                <a class="read-more"
+                   href="{{ route('post.index') }}">
+                    ← Danh sách bài viết
                 </a>
 
-            </div>
-        </div>
-    @else
-        <div class="alert alert-warning">
-            Không tìm thấy bài viết.
-        </div>
+                @if (auth()->check() && auth()->id() == $post->user_id)
 
-        <a href="{{ url('/') }}" class="btn btn-secondary">
-            Quay lại trang chủ
-        </a>
-    @endif
+                    <a class="action-button edit-button"
+                       href="{{ route('post.edit', $post->id) }}">
+                        Sửa bài viết
+                    </a>
+
+                    <form action="{{ route('post.destroy', $post->id) }}"
+                          method="POST"
+                          onsubmit="return confirm('Bạn có chắc muốn xóa bài viết này không?')">
+                        @csrf
+                        @method('DELETE')
+
+                        <button type="submit" class="action-button delete-button">
+                            Xóa bài viết
+                        </button>
+                    </form>
+
+                @endif
+
+            </div>
+
+        </article>
+    </section>
+
+</main>
 
 @endsection

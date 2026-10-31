@@ -4,153 +4,104 @@
 
 @section('content')
 
-    <div class="p-5 mb-5 text-white rounded"
-         style="background: linear-gradient(120deg, #173b6c, #3977a8);">
-
-        <p class="text-uppercase mb-2">Blog cá nhân</p>
-
-        <h1 class="font-weight-bold">Góc Công Nghệ</h1>
-
-        <p class="mb-0">
-            Chia sẻ kiến thức lập trình, phát triển website
-            và kinh nghiệm học tập của sinh viên IT.
+<section class="hero">
+    <div class="container">
+        <h1>Chào mừng đến với Góc Công Nghệ</h1>
+        <p>
+            Nơi chia sẻ kiến thức về công nghệ, lập trình,
+            website và những xu hướng công nghệ mới.
         </p>
     </div>
+</section>
 
-    <div class="row">
+<main class="container page-content">
 
-        <div class="col-md-8">
+    <section>
+        <h2 class="section-title">Bài viết mới nhất</h2>
 
-            <h3 class="font-weight-bold mb-4">
-                Bài viết mới nhất
-            </h3>
+        @if ($posts->isEmpty())
+            <div class="empty-message">
+                Hiện chưa có bài viết nào.
+            </div>
+        @else
+            @foreach ($posts as $post)
+                <article class="post-card">
+                    @if ($post->image)
+    <img src="{{ asset('storage/' . $post->image) }}"
+         alt="{{ $post->title }}"
+         class="post-image">
+@endif
+                    <h3>
+                        <a href="{{ route('post.show', $post->id) }}">
+                            {{ $post->title }}
+                        </a>
+                    </h3>
 
-            @if(count($posts) > 0)
+                    <div class="post-meta">
+                        Bài viết #{{ $post->id }}
 
-                @foreach($posts as $post)
-
-                    <div class="card mb-4">
-                        <div class="card-body p-4">
-
-                            <span class="badge badge-primary mb-2">
-                                CÔNG NGHỆ
-                            </span>
-
-                            <h4 class="font-weight-bold">
-                                <a href="{{ url('/post/' . $post->id) }}"
-                                   class="text-dark">
-                                    {{ $post->title }}
-                                </a>
-                            </h4>
-
-                            <p class="text-muted">
-                                Bài viết số {{ $post->id }}
-                            </p>
-
-                            <p>
-                                {{ $post->content }}
-                            </p>
-
-                            <a href="{{ url('/post/' . $post->id) }}"
-                               class="btn btn-outline-primary">
-                                Đọc tiếp →
-                            </a>
-
-                        </div>
+                        @if ($post->created_at)
+                            - Tác giả:
+                            {{ $post->user ? $post->user->name : 'Chưa xác định' }} 
+                            | Ngày đăng:
+                            {{ $post->created_at->format('d/m/Y') }}
+                        @endif
                     </div>
 
-                @endforeach
+                    <div class="post-excerpt">
+                        {{ \Illuminate\Support\Str::limit($post->content, 220) }}
+                    </div>
 
+                    <a
+                        class="read-more"
+                        href="{{ route('post.show', $post->id) }}"
+                    >
+                        Đọc tiếp →
+                    </a>
+                </article>
+            @endforeach
+        @endif
+    </section>
+
+    <aside>
+        <div class="sidebar-box">
+            <h3>Giới thiệu</h3>
+            <p>
+                Góc Công Nghệ là website chia sẻ kiến thức,
+                kinh nghiệm lập trình và thông tin công nghệ
+                dành cho những người yêu thích công nghệ.
+            </p>
+        </div>
+
+        <div class="sidebar-box">
+            <h3>Chủ đề nổi bật</h3>
+            <ul>
+                <li>Lập trình PHP và Laravel</li>
+                <li>Phát triển website</li>
+                <li>Cơ sở dữ liệu</li>
+                <li>Công nghệ thông tin</li>
+            </ul>
+        </div>
+
+        <div class="sidebar-box">
+            <h3>Bài viết gần đây</h3>
+
+            @if ($recentPosts->isEmpty())
+                <p>Chưa có bài viết gần đây.</p>
             @else
-
-                <div class="alert alert-info">
-                    Hiện tại chưa có bài viết nào.
-                </div>
-
+                <ul>
+                    @foreach ($recentPosts as $recentPost)
+                        <li>
+                            <a href="{{ route('post.show', $recentPost->id) }}">
+                                {{ $recentPost->title }}
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
             @endif
-
         </div>
+    </aside>
 
-        <div class="col-md-4">
-
-            <div class="card mb-4">
-                <div class="card-body p-4">
-
-                    <h4 class="font-weight-bold mb-3">
-                        Giới thiệu
-                    </h4>
-
-                    <p>
-                        Góc Công Nghệ là nơi chia sẻ kiến thức
-                        về lập trình, website và cơ sở dữ liệu.
-                    </p>
-
-                    <p class="mb-0">
-                        Nội dung hướng đến những người mới học
-                        công nghệ thông tin.
-                    </p>
-
-                </div>
-            </div>
-
-            <div class="card mb-4">
-                <div class="card-body p-4">
-
-                    <h4 class="font-weight-bold mb-3">
-                        Chủ đề
-                    </h4>
-
-                    <ul class="list-unstyled mb-0">
-                        <li class="border-bottom py-2">
-                            PHP và Laravel
-                        </li>
-
-                        <li class="border-bottom py-2">
-                            Thiết kế website
-                        </li>
-
-                        <li class="border-bottom py-2">
-                            Cơ sở dữ liệu
-                        </li>
-
-                        <li class="py-2">
-                            Kinh nghiệm học IT
-                        </li>
-                    </ul>
-
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-body p-4">
-
-                    <h4 class="font-weight-bold mb-3">
-                        Bài viết gần đây
-                    </h4>
-
-                    @if(count($posts) > 0)
-
-                        @foreach($posts as $post)
-
-                            <p class="border-bottom pb-2">
-                                <a href="{{ url('/post/' . $post->id) }}">
-                                    {{ $post->title }}
-                                </a>
-                            </p>
-
-                        @endforeach
-
-                    @else
-
-                        <p>Chưa có bài viết.</p>
-
-                    @endif
-
-                </div>
-            </div>
-
-        </div>
-
-    </div>
+</main>
 
 @endsection

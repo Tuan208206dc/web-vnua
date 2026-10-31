@@ -1,0 +1,310 @@
+/* Trang chi tiet bai viet */
+.post-detail {
+    min-width: 0;
+}
+
+.post-detail .post-card {
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.post-detail .post-card h1 {
+    color: #222;
+    font-size: 28px;
+    line-height: 1.4;
+    margin: 18px 0;
+}
+
+.post-content {
+    color: #444;
+    font-size: 16px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    margin: 20px 0;
+}
+
+.post-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.post-actions form {
+    margin: 0;
+}
+
+.action-button {
+    display: inline-block;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.edit-button {
+    background-color: #f0ad4e;
+}
+
+.edit-button:hover {
+    background-color: #d9912d;
+}
+
+.delete-button {
+    background-color: #dc3545;
+}
+
+.delete-button:hover {
+    background-color: #bd2130;
+}
+
+.post-actions .read-more {
+    display: inline-block;
+    text-decoration: none;
+}
+
+@media (max-width: 600px) {
+    .post-detail .post-card {
+        padding: 16px;
+    }
+
+    .post-detail .post-card h1 {
+        font-size: 23px;
+    }
+
+    .post-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .post-actions .action-button,
+    .post-actions .read-more {
+        text-align: center;
+    }
+}
+/* Danh sach bai viet */
+.post-list-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.post-list-top p,
+.form-description {
+    color: #666;
+    line-height: 1.6;
+}
+
+.post-list .post-card {
+    margin-bottom: 22px;
+}
+
+.post-list .post-card h3 {
+    margin-top: 0;
+    line-height: 1.5;
+}
+
+.post-list .post-card h3 a {
+    color: #222;
+    text-decoration: none;
+}
+
+.post-list .post-card h3 a:hover {
+    color: #2563eb;
+}
+
+/* Nut thao tac */
+.post-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.post-actions form {
+    margin: 0;
+}
+
+.action-button {
+    display: inline-block;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.view-button {
+    background-color: #2563eb;
+}
+
+.view-button:hover {
+    background-color: #1d4ed8;
+}
+
+.add-button {
+    background-color: #16a34a;
+}
+
+.add-button:hover {
+    background-color: #15803d;
+}
+
+.edit-button {
+    background-color: #f0ad4e;
+}
+
+.edit-button:hover {
+    background-color: #d9912d;
+}
+
+.delete-button {
+    background-color: #dc3545;
+}
+
+.delete-button:hover {
+    background-color: #bd2130;
+}
+
+.cancel-button {
+    background-color: #64748b;
+}
+
+.cancel-button:hover {
+    background-color: #475569;
+}
+
+/* Thong bao */
+.success-message {
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    color: #166534;
+    background-color: #dcfce7;
+    border: 1px solid #bbf7d0;
+    border-radius: 5px;
+}
+
+.error-message {
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    color: #991b1b;
+    background-color: #fee2e2;
+    border: 1px solid #fecaca;
+    border-radius: 5px;
+}
+
+.error-message ul {
+    margin-bottom: 0;
+}
+
+/* Form them bai viet */
+.post-form-section .post-card {
+    padding: 25px;
+}
+
+.form-description {
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+.post-form .form-group {
+    margin-bottom: 22px;
+}
+
+.post-form label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 600;
+}
+
+.post-form input,
+.post-form select,
+.post-form textarea {
+    display: block;
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    font-family: inherit;
+    font-size: 15px;
+}
+
+.post-form textarea {
+    resize: vertical;
+    line-height: 1.7;
+}
+
+.post-form input:focus,
+.post-form select:focus,
+.post-form textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+@media (max-width: 600px) {
+    .post-list-top {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .post-list .post-card,
+    .post-form-section .post-card {
+        padding: 18px;
+    }
+
+    .post-actions {
+        gap: 8px;
+    }
+
+    .action-button {
+        text-align: center;
+    }
+
+    .post-form input,
+    .post-form select,
+    .post-form textarea {
+        font-size: 16px;
+    }
+}
+/* Anh hien tai trong form sua bai viet */
+.edit-post-image {
+    display: block;
+    width: 100%;
+    max-width: 350px;
+    max-height: 260px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    margin-top: 10px;
+}
+
+.post-form input[type="file"] {
+    padding: 10px;
+    background-color: #f8fafc;
+}
